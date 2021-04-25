@@ -1,4 +1,7 @@
 {
   "name": "RebuMobile",
-  "displayName": "RebuMobile"
+  "displayName": "RebuMobile",
+  "version": "1.0.0",
+  "orientation": "portrait" 
+
 }

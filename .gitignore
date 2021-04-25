@@ -57,3 +57,8 @@ buck-out/
 
 # CocoaPods
 /ios/Pods/
+
+#api key for
+android/app/src/main/AndroidManifest.xml
+
+src/API/RebuAPI.js

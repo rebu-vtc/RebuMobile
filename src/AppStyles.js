@@ -13,6 +13,7 @@ export const AppStyles = {
     subtitle: "#545454",
     categoryTitle: "#161616",
     tint: "#ff5a66",
+    tint1: "ff5a68",
     description: "#bbbbbb",
     filterTitle: "#8a8a8a",
     starRating: "#2bdf85",
@@ -23,7 +24,14 @@ export const AppStyles = {
     greenBlue: "#00aea8",
     placeholder: "#a0a0a0",
     background: "#f2f2f2",
-    blue: "#3293fe"
+    blue: "#3293fe",
+    secondary:'#CDCDD2',
+    lightGray: "#e3e4e6",
+    lightGray2: "#F6F6F7",
+    lightGray3: "#EFEFF1",
+    lightGray4: "#F8F8F9",
+    transparent: "transparent",
+    darkgray: '#898C95',
   },
   fontSize: {
     title: 30,
@@ -59,9 +67,17 @@ export const AppIcon = {
     height: 25
   },
   images: {
-    home: require("../assets/icons/home.png"),
-    defaultUser: require("../assets/icons/default_user.jpg"),
-    logout: require("../assets/icons/shutdown.png")
+    car: require("../assets/icons/car.png"),
+    user: require("../assets/icons/user.png"),
+    logout: require("../assets/icons/shutdown.png"),
+    course: require("../assets/icons/baseline_directions_car_black_18dp.png"),
+    local: require("../assets/icons/baseline_add_location_alt_black_18dp.png"),
+    miniCar: require("../assets/icons/baseline_local_shipping_black_18dp.png"),
+    loyalty: require("../assets/icons/baseline_loyalty_black_18dp.png"),
+    menu: require("../assets/icons/menu-hamb.png"),
+    avatarC: require("../assets/icons/avatar.png"),
+    luxe: require("../assets/icons/car-01.png"),
+    flat: require("../assets/icons/drapeau.png"),
   }
 };
 
@@ -107,3 +123,41 @@ export const ListStyle = StyleSheet.create({
     width: 80
   }
 });
+
+export const SIZES = {
+  //global sizes
+  base: 8,
+  font: 14,
+  radius: 30,
+  padding: 10,
+  padding2: 12,
+
+  //font sizes
+  largeTitle: 50,
+  h1: 30,
+  h2: 22,
+  h3: 20,
+  h4: 18,
+  body1: 30,
+  body2: 20,
+  body3: 16,
+  body4: 14,
+  body5: 12,
+
+  width,
+  height
+
+}
+
+export const FONTS = {
+  largeTitle: { fontFamily: "Roboto-Regular", fontSize: SIZES.largeTitle, lineHeight: 1},
+  h1: { fontFamily: "Roboto-Black", fontSize: SIZES.h1, lineHeight: 36},
+  h2: { fontFamily: "Roboto-Bold", fontSize: SIZES.h2, lineHeight: 30},
+  h3: { fontFamily: "Roboto-Bold", fontSize: SIZES.h3, lineHeight: 22},
+  h4: { fontFamily: "Roboto-Bold", fontSize: SIZES.h4, lineHeight: 22},
+  body1: { fontFamily: "Roboto-regular", fontSize: SIZES.body1, lineHeight: 36},
+  body2: { fontFamily: "Roboto-Regular", fontSize: SIZES.body2, lineHeight: 30},
+  body3: { fontFamily: "Roboto-Regular", fontSize: SIZES.body3, lineHeight: 22},
+  body4: { fontFamily: "Roboto-Regular", fontSize: SIZES.body4, lineHeight: 22},
+  body5: { fontFamily: "Roboto-Regular", fontSize: SIZES.body5, lineHeight: 22}
+}

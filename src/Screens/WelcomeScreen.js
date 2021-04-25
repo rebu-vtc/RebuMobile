@@ -1,8 +1,16 @@
 import React from 'react'
-import { ScrollView, Text, StyleSheet, View, ActivityIndicator } from 'react-native';
-import { Configuration } from '../Configuration'
-import { AppStyles } from '../AppStyles'
-import Button from "react-native-button";
+import { 
+     StyleSheet, 
+     View, 
+     Text,
+     ActivityIndicator, 
+     Image,
+     Dimensions,
+     TouchableOpacity
+} from 'react-native';
+import { AppStyles, SIZES, AppIcon } from '../AppStyles'
+import LinearGradient from 'react-native-linear-gradient';
+import * as Animatable from 'react-native-animatable';
 
 class WelcomeScreen extends React.Component {
     constructor(props) {
@@ -11,6 +19,62 @@ class WelcomeScreen extends React.Component {
             isLoading: false,
         }
     }
+    renderHeader(){
+        return (
+            <View style={styles.header}>
+                <Animatable.Image
+                    animation="bounceIn"
+                    iterationCount={1}
+                    source={AppIcon.images.luxe}
+                    style={styles.logo}
+                    resizeMode='stretch'
+                />   
+                <Animatable.Text 
+                    animation="pulse"
+                    iterationCount={1}
+                    style={[styles.title, { color: 'white'}]}
+                >
+                    REBU VTC
+                </Animatable.Text>     
+            </View>
+        )
+    }
+    renderFooter(){
+        return (
+            <Animatable.View 
+                animation="fadeInUpBig"
+                iterationCount={1}
+                style={styles.footer}
+            >
+                <Text style={styles.title}>Salut ! bienvenue sur notre service</Text>
+
+                <View style={{ alignItems: 'center', justifyContent: 'center'}}>
+                    <TouchableOpacity 
+                        onPress = { () => this.props.navigation.navigate("Login")}
+                    >   
+                        <LinearGradient
+                            colors={[AppStyles.color.tint, AppStyles.color.tint]}
+                            style={styles.loginContainer}   
+                        >
+                            <Text style={styles.loginText} > Se connecter</Text>  
+                        </LinearGradient>
+                    </TouchableOpacity>
+                    <TouchableOpacity  
+                        onPress = { () => this.props.navigation.navigate("Signup")}
+                    >
+                        <LinearGradient
+                            colors={[AppStyles.color.white, AppStyles.color.white]}
+                            style={styles.signupContainer} 
+                        >
+                            <Text style={styles.signupText} >S'inscrire</Text> 
+                        </LinearGradient>
+                    </TouchableOpacity>
+                    </View>
+            </Animatable.View>
+        
+        )
+    }
+
 
     render() {
         if (this.state.isLoading == true) {
@@ -25,32 +89,23 @@ class WelcomeScreen extends React.Component {
 
         return (
             <View style={styles.container}>
-                <Text style={styles.title}>Salut ! bienvenue sur notre service</Text>
-                <Button 
-                    containerStyle={styles.loginContainer}
-                    style={styles.loginText}
-                    onPress = { () => this.props.navigation.navigate("Login")}
-                >
-                    Se connecter
-                </Button>
-                <Button
-                    containerStyle={styles.signupContainer}
-                    style={styles.signupText}
-                    onPress = { () => this.props.navigation.navigate("Signup")}
-                >
-                    S'inscrire
-                </Button>
+               
+                { this.renderHeader() }
+                { this.renderFooter() }
             </View>
         );
     }
 }
 
+const {height} = Dimensions.get('screen');
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        alignItems: "center",
-        justifyContent: "center",
-        marginBottom: 150,
+        //alignItems: "center",
+        //justifyContent: "center",
+        //marginBottom: 150,
+        backgroundColor: AppStyles.color.tint
     },
     title: {
         fontSize: AppStyles.fontSize.title,
@@ -69,20 +124,47 @@ const styles = StyleSheet.create({
         color: AppStyles.color.tint
     },
     signupContainer: {
-        width: AppStyles.buttonWidth.main,
+        width: 200,
         backgroundColor: AppStyles.color.white,
         borderRadius: AppStyles.borderRadius.main,
         padding: 8,
         borderWidth: 1,
         borderColor: AppStyles.color.tint,
-        marginTop: 15
+        marginTop: 15,
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     loginContainer: {
-        width: AppStyles.buttonWidth.main,
+        width: 200,
         backgroundColor: AppStyles.color.tint,
         borderRadius: AppStyles.borderRadius.main,
         padding: 10,
-        marginTop: 30
+        marginTop: 30,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    header: {
+        flex: 2,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    footer:{
+        flex: 1.5,
+        backgroundColor: '#fff',
+        borderTopLeftRadius: 30,
+        borderTopRightRadius: 30,
+        paddingVertical: 75,
+        paddingHorizontal: 30,
+    }, 
+    title: {
+        color: 'black',
+        fontSize: 30, 
+        fontWeight: 'bold',
+    },
+    
+    logo: {
+        height: "25%",
+        width: "75%",
     }
 })
 
