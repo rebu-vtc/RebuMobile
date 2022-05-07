@@ -1,17 +1,17 @@
 import React from 'react'
-import DriverHomeScreen from "../../Screens/Driver/DriverHomeScreen";
+import HomeDriver from "../../screens/driver/HomeDriver";
 import { createStackNavigator } from '@react-navigation/stack'
 
 const HomeDriveStack = createStackNavigator(); // stack for home
 const Stack = createStackNavigator();
 
 
-const AppDriverHomeScreen = () => (
+const AppHomeDriver = () => (
     <HomeDriveStack.Navigator
       headerMode="none"
     >
-      <Stack.Screen name="HomeDriver" component={DriverHomeScreen}/>
+      <Stack.Screen name="HomeDriver" component={HomeDriver}/>
     </HomeDriveStack.Navigator>
 )
 
-export default AppDriverHomeScreen
+export default AppHomeDriver

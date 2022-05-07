@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import {
   StyleSheet,
   View,
@@ -10,7 +10,7 @@ import MapView, {
   Polyline,
   PROVIDER_GOOGLE
 } from "react-native-maps";
-import { AppIcon } from '../AppStyles'
+import { AppIcon } from '../ThemeStyles'
 import Geolocation from '@react-native-community/geolocation';
 import Search from './Search'
 import haversine from "haversine";

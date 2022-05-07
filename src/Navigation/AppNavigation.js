@@ -3,9 +3,10 @@ import { Animated, Easing, Image, StyleSheet, View, TouchableOpacity } from 'rea
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack'
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import AppTabNavigatorScreen from './User/AppTabNavigatorScreen'
+import TabNavigatorUser from './User/TabNavigatorUser'
 import AppDriverTab from './Driver/AppDriverTab'
-import AppWelcomeStackScreen from './AppWelcomeStackScreen'
+import StackWelcomeScreen from './StackWelcomeScreen'
+import DrawerContainer from '../components/DrawerContainer';
 
 
 
@@ -18,19 +19,16 @@ const noTransitionConfig = () => ({
 });
 
 
-const RootStack = createStackNavigator();
 
-/*const DrawerNavigator = () => {
-  <RebuDrawer.Navigator>
-    <RebuDrawer.Screen name="" component={} />
-  </RebuDrawer.Navigator>
-}*/
+
+
 
 // navigation
 
 const RootNavigator = () => {
+  const RootStack = createStackNavigator();
+
   return(
-    <NavigationContainer>
       <RootStack.Navigator
         headerMode="none"
         //initialRouteName="Welcome"
@@ -39,15 +37,30 @@ const RootNavigator = () => {
           transitionConfig:noTransitionConfig
         })}
       >
-        {/*<RootStack.Screen name="LoginStack" component={AppWelcomeStackScreen}/>
-        <RootStack.Screen name="TabNavigator" component={AppTabNavigatorScreen}/>*/}
-        <RootStack.Screen name="AppDriverTab" component={AppDriverTab}/>
+        <RootStack.Screen name="LoginStack" component={StackWelcomeScreen}/>
+        <RootStack.Screen name="TabNavigator" component={TabNavigatorUser}/>
+        {/*<RootStack.Screen name="AppDriverTab" component={AppDriverTab}/>*/}
       </RootStack.Navigator>
-    </NavigationContainer>
   );
 }
 
-export default RootNavigator ;
+const RebuDrawer = createDrawerNavigator();
+
+const DrawerNavigator = ({ navigation }) => (
+  <NavigationContainer>
+    <RebuDrawer.Navigator
+      drawerContent={props => <DrawerContainer {...props} /> }
+    >
+
+        <RebuDrawer.Screen name="RootNavigators" component={RootNavigator} />
+    </RebuDrawer.Navigator>
+  </NavigationContainer>
+
+)
+export default DrawerNavigator ;
+
+
+
 
 
 

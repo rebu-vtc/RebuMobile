@@ -1,16 +1,13 @@
-import React from 'react'
-import RootNavigator from './src/Navigation/AppNavigation'
-import AppWelcomeStackScreen from './src/Navigation/AppWelcomeStackScreen'
-import DriverHomeScreen from './src/Screens/Driver/DriverHomeScreen'
+
+import React from 'react';
+import DrawerNavigator from './src/Navigation/AppNavigation';
 
 
 const App = () => {
+  return (
+    <DrawerNavigator />
+  );
+};
 
-  
-    return ( 
-      <RootNavigator />
-    );
- 
-}
 
 export default App;

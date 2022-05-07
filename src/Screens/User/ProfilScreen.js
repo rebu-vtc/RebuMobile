@@ -1,149 +1,258 @@
-import React from 'react'
-import {  StyleSheet, View, SafeAreaView } from 'react-native';
-import {Avatar, Title, Caption, Text, TouchableRipple} from 'react-native-paper'
+import React, { useState } from 'react'
+import { 
+    StyleSheet, 
+    ScrollView,
+    Text,
+    TouchableOpacity,
+    ImageBackground,
+    TextInput,
+    Platform,
+    View,
+} from 'react-native'
+import { useTheme } from 'react-native-paper';
 
-import { Configuration } from '../../Configuration'
-import { AppStyles, SIZES, AppIcon, FONTS } from '../../AppStyles'
+import { ThemeStyles, SIZES, AppIcon, FONTS, globalStyles } from '../../ThemeStyles'
 import Icon from "react-native-vector-icons/MaterialCommunityIcons"
+import FontAwesome from "react-native-vector-icons/FontAwesome"
+import Feather from "react-native-vector-icons/Feather"
+import BottomSheet from 'reanimated-bottom-sheet';
+import Animated from 'react-native-reanimated';
+import CustomButton from '../../components/forms/CustomButton';
+import Field from '../../components/forms/Field';
 
 
-class ProfilScreen extends React.Component {
+const ProfilScreen = ({ navigation }) => {
 
-    render() {
+        const { colors } = useTheme();
+
+        const [formData, setFormData] = useState({
+            fullName: '',
+            email: '',
+            telephone: '',
+            password: '', 
+        });
+        const [showPassword, setShowPassword] = useState(false); 
+
+        const renderInner = () => (
+
+            <View style={styles.panel}>
+
+                <View style={{alignItems: 'center'}}>
+                    <View style={styles.horizontalClip} />
+                    <Text style={styles.panelTitle}>Upload Photo</Text>
+                    <Text style={styles.panelSubtitle}>Choose Profile Picture</Text>
+                </View>
+                <CustomButton label="Prendre une Photo" buttonColor={ThemeStyles.color.tint} buttonContainer={styles.buttonContainer} onPress={() => {}}/>
+                <CustomButton label="Choisir dans la bibliothèque" buttonColor={ThemeStyles.color.tint} buttonContainer={styles.buttonContainer} onPress={() => {}}/>
+                <CustomButton label="Annuler" buttonColor={ThemeStyles.color.tint} buttonContainer={styles.buttonContainer} onPress={() => bs.current.snapTo(1)}/>
+            </View>
+        );
+
+       const renderHeader = () => (
+            <View style={styles.header}>
+                <View style={styles.panelHeader}>
+                    <View style={styles.panelHandle} />
+                </View>
+            </View>
+        );
+
+        const bs = React.createRef();
+        const fall = new Animated.Value(1);
+
+        const handleChange = ( text ) => {
+            const { name, value } = text;
+            setFormData({ [name]: value })
+        }
+
         return (
-            <SafeAreaView style={styles.container}>
-               
-                <View style={styles.userInfoSection}>
-                    <View style={{flexDirection: 'row', marginTop: 15}}>
-                        <Avatar.Image
-                            source={AppIcon.images.avatarC}
-                            size={80}
-                        />
-                        <View style={{marginLeft: 20}}>
-                            <Title style={[
-                                styles.title, {
-                                    marginTop:15,
-                                    marginBottom: 5
-                                }
-                                ]}>Adja Doucanse</Title>
-                            <Caption style={styles.caption}>@adjadoucanse</Caption>
-                        </View>
-                    </View>
-                    
-                </View>
-                
-                <View style={styles.userInfoSection}>
-                    <View style={styles.row}>
-                        <Icon name="phone" color="#777777" size={20}/>
-                        <Text style={{ color:"#777777", marginLeft: 20 }}>003377668852</Text>
-                    </View>
-                    <View style={styles.row}>
-                        <Icon name="email" color="#777777" size={20}/>
-                        <Text style={{ color:"#777777", marginLeft: 20 }}>adja@gmail.com</Text>
-                    </View>
-                </View>
-                <View style={styles.infoBoxWrapper}>
-                    <View style={[styles.infoBox, {
-                        borderRightColor: '#dddddd',
-                        borderRightWidth: 1
-                    }]}>
-                      <Title>$140</Title>
-                      <Caption>course/Mois</Caption>
-                    </View>
-                    <View style={styles.infoBox}>
-                      <Title>$14</Title>
-                      <Caption>course/Jours</Caption>
-                    </View>
-                </View>
+            <ScrollView style={[globalStyles.constainer, { backgroundColor: ThemeStyles.color.white }]}>
+                <BottomSheet
+                    ref={bs}
+                    snapPoints={[330, 0]}
+                    renderContent={renderInner}
+                    renderHeader={renderHeader}
+                    initialSnap={1}
+                    callbackNode={fall}
+                    enabledGestureInteraction={true}
+                />
+                <Animated.View style={
+                    {margin: 20,
+                    opacity: Animated.add(0.1, Animated.multiply(fall, 1.8)),
 
-                <View style={styles.menuWrapper}>
-                    <TouchableRipple onPress={() => {}}>
-                        <View style={styles.menuItem}>
-                            <Icon name="calendar" color="#FF6347" size={25}/>
-                            <Text style={styles.menuItemText}>Trajets</Text>
-                        </View>
-                    </TouchableRipple>
-                    <TouchableRipple onPress={() => {}}>
-                        <View style={styles.menuItem}>
-                            <Icon name="credit-card" color="#FF6347" size={25}/>
-                            <Text style={styles.menuItemText}>Paiement</Text>
-                        </View>
-                    </TouchableRipple>
-               
-                    <TouchableRipple onPress={() => {}}>
-                        <View style={styles.menuItem}>
-                            <Icon name="heart-outline" color="#FF6347" size={25}/>
-                            <Text style={styles.menuItemText}>Parrainage</Text>
-                        </View>
-                    </TouchableRipple>
-                    <TouchableRipple onPress={() => {}}>
-                        <View style={styles.menuItem}>
-                            <Icon name="help-circle-outline" color="#FF6347" size={25}/>
-                            <Text style={styles.menuItemText}>Aide</Text>
-                        </View>
-                    </TouchableRipple>
-                    <TouchableRipple onPress={() => {}}>
-                        <View style={styles.menuItem}>
-                            <Icon name="set-none" color="#FF6347" size={25}/>
-                            <Text style={styles.menuItemText}>Paramètres</Text>
-                        </View>
-                    </TouchableRipple>                    
-                </View>
-            </SafeAreaView>
+                }}>
+                    <View style={{alignItems: 'center', marginBottom: 10}}>
+                        <TouchableOpacity
+                            onPress={ () => bs.current.snapTo(0)}>
+                            <View style={styles.iconProfil}>
+                                <ImageBackground
+                                    source={AppIcon.images.avatarC}
+                                    style={{ height:100, width: 100}}
+                                    imageStyle={{borderRadius: 15}}
+                                >
+                                    <View style={styles.centerAndAlign}><Icon name="camera" size={35} color='#fff' style={styles.iconCamera} /></View>
+                                </ImageBackground>
+                            </View>
+                        </TouchableOpacity>
+                        <Text style={{marginTop: 10, fontSize: 18, fontWeight: 'bold', marginBottom: 10}}>Adja Doucanse</Text>
+                        <Field 
+                            placeholder= "Nom complet"
+                            placeholderTextColor="#666666"
+                            autoCorrect={false}
+                            style={[styles.textInput, {
+                                color: colors.text
+                            }]}
+                            onChangeText={handleChange}
+                            value={formData.fullName}
+                        >
+                            <FontAwesome
+                                name="user-o"
+                                color={colors.text} 
+                                size={20}
+                            />
+                        </Field>
+                        <Field 
+                            placeholder= "Email"
+                            placeholderTextColor="#666666"
+                            keyboardType="email-address"
+                            autoCorrect={false}
+                            style={[styles.textInput, {
+                                color: colors.text
+                            }]}
+                            onChangeText={handleChange}
+                            value={formData.email}
+                        >
+                            <FontAwesome
+                                name="envelope-o"
+                                color={colors.text} 
+                                size={20}
+                            />
+                        </Field>
+                        <Field 
+                            placeholder= "Téléphone"
+                            placeholderTextColor="#666666"
+                            keyboardType="number-pad"
+                            autoCorrect={false}
+                            style={[styles.textInput, {
+                                color: colors.text
+                            }]}
+                            onChangeText={handleChange}
+                            value={formData.telephone}
+                        >
+                            <FontAwesome
+                                name="phone"
+                                color={colors.text} 
+                                size={20}
+                            />
+                        </Field>
+                        <Field 
+                            placeholder="Mot de passe"
+                            placeholderTextColor="#666666"
+                            showPassword={!showPassword}
+                            isPassword={true}
+                            onPress={() => setShowPassword(!showPassword)}
+                            onChangeText={handleChange}
+                            value={formData.password}
+                            style={[styles.textInput, {
+                                color: colors.text
+                            }]}
+                        >
+                            <Feather
+                                name="lock"
+                                color={colors.text}
+                                size={20}
+                            />
+                        </Field>
+                        <CustomButton label="Enregistrer" buttonColor={ThemeStyles.color.tint} buttonContainer={styles.buttonContainer} onPress={() => {}} />
+                    </View>
+                </Animated.View>
+            </ScrollView>
         )
-    }
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff'
+    
+    header: {
+        backgroundColor: '#FFFFFF',
+        shadowColor: '#333333',
+        shadowOffset: {width: -1, height: -3},
+        shadowRadius: 2,
+        shadowOpacity: 0.4,
     },
-    userInfoSection: {
-        paddingHorizontal: 30,
-        marginBottom: 25,
+    panel:{
+        paddingBottom: 20,
+        backgroundColor:'#fff',
+        paddingTop: 20,
     },
-    title: {
-        fontSize: 24,
-        fontWeight:  'bold',
+    panelHeader: {
+        alignItems: 'center',
     },
-    caption: {
+    panelTitle:{
+        fontWeight: 'bold',
+    },
+    panelHandle: {
+        width: 40,
+        height: 8,
+    },
+    panelSubtitle: {
         fontSize: 14,
-        lineHeight: 14,
-        fontWeight: '500',
-    },
-    row: {
-        flexDirection: 'row', 
+        color: ThemeStyles.color.gray,
+        height: 30,
         marginBottom: 10,
     },
-    infoBoxWrapper: {
-        borderBottomColor: '#dddddd',
-        borderBottomWidth: 1,
-        borderTopColor: '#dddddd',
-        borderTopWidth: 1,
-        flexDirection: 'row',
-        height: 100,
+    panelButton: {
+        padding: 13,
+        borderRadius: 10,
+        backgroundColor: '#FF6347',
+        alignItems: 'center',
+        marginVertical: 7,
     },
-    infoBox: {
-        width: '50%',
+    panelButtonTitle: {
+        fontSize: 17,
+        fontWeight: 'bold',
+        color: ThemeStyles.color.white,
+    },
+    
+    actionError: {
+        flexDirection: 'row', 
+        marginTop: 10,
+        borderBottomWidth: 1,
+        borderBottomColor: '#FF0000',
+        paddingBottom: 5,
+    },
+    textInput: {
+        flex: 1,
+        marginTop: Platform.OS == 'ios' ? 0 : -12,
+        marginLeft: 10,
+        color: '#05375a'
+    },
+    horizontalClip: {
+        backgroundColor: ThemeStyles.color.mediumGrey,
+        width: 60,
+        height: 5,
+        borderRadius: 25,
+        marginBottom: 10,
+    },
+    iconProfil: {
+        height: 100,
+        width: 100,
+        borderRadius: 15,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    centerAndAlign: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    iconCamera: {
+        opacity: 0.7,
         alignItems: 'center',
         justifyContent: 'center',
+        borderWidth: 1,
+        borderColor: '#fff',
+        borderRadius: 10,
     },
-    menuWrapper: {
-        marginTop: 10,
-    },
-    menuItem: {
-        flexDirection: 'row',
-        paddingVertical: 15,
-        paddingHorizontal: 30,
-    },
-    menuItemText: {
-        color: '#777777',
-        marginLeft: 20,
-        fontWeight: '600',
-        fontSize: 16,
-        lineHeight: 26,
-    }
 
-});
+})
+
 export default ProfilScreen
